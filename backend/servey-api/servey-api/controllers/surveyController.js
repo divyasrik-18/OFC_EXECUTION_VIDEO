@@ -1,7 +1,6 @@
 import { db } from '../config/db.js';
 import fs from 'fs';
 import path from 'path';
-// FIX: Static import at the top to prevent "not defined" errors
 import * as synoService from '../services/synologyService.js';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -21,7 +20,6 @@ const generateFilenameBase = (district, block, typeCode, shotNo) => {
 const processFile = async (file, suffix, index = '', baseFilename, metadata) => {
     if (!file) return null;
     const now = new Date();
-    // Indian Standard Time (IST) offset
     const istOffset = 5.5 * 60 * 60 * 1000;
     const istDate = new Date(now.getTime() + istOffset);
     const safeDate = istDate.toISOString().replace('T', ' ').substring(0, 19);
@@ -34,7 +32,6 @@ const processFile = async (file, suffix, index = '', baseFilename, metadata) => 
     const storageName = `${baseFilename}_${dateStr}${index}_${uuid}_${ext}`;
 
     try {
-        // Returns the full absolute path from Synology
         const nasPath = await synoService.uploadToSynology(file.path, metadata, storageName);
         if (fs.existsSync(file.path)) await fs.promises.unlink(file.path).catch(() => { });
         if (!nasPath) throw new Error("Upload failed to Synology");
@@ -56,7 +53,6 @@ export const createSurvey = async (req, res) => {
         } = req.body;
 
         const now = new Date();
-        // Indian Standard Time (IST) offset
         const istOffset = 5.5 * 60 * 60 * 1000;
         const istDate = new Date(now.getTime() + istOffset);
         const safeDate = istDate.toISOString().replace('T', ' ').substring(0, 19);
@@ -119,7 +115,6 @@ export const createSurvey = async (req, res) => {
         ];
 
         const result = await db.query(query, values);
-        // FIX: Return the created survey object
         res.json({ success: true, survey: result.rows[0] });
 
     } catch (error) {
@@ -130,7 +125,6 @@ export const createSurvey = async (req, res) => {
 
 export const getSurveys = async (req, res) => {
     try {
-        // FIX: Extract submitted_by from req.query
         const { page = 1, search, district, block, surveyor_name, start_date, end_date, submitted_by, submitter_id } = req.query;
         let limit = parseInt(req.query.limit) || 10;
 
