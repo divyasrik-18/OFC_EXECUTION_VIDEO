@@ -51,7 +51,7 @@ export const createSurvey = async (req, res) => {
             latitude, longitude, surveyorName, surveyorMobile, remarks,
             submittedBy, submitterId
         } = req.body;
-
+        const surveyId = uuidv4(); 
         const now = new Date();
         const istOffset = 5.5 * 60 * 60 * 1000;
         const istDate = new Date(now.getTime() + istOffset);
@@ -92,17 +92,17 @@ export const createSurvey = async (req, res) => {
 
         const query = `
             INSERT INTO surveys (
-                district, block, route_name, location_type, 
+                surveyId,district, block, route_name, location_type, 
                 shot_number, ring_number, start_location, end_location, 
                 latitude, longitude, surveyor_name, surveyor_mobile, 
                 generated_filename, submitted_by, survey_date,
                 photos, videos, gopro, selfie_path, remarks, submitter_id
             ) 
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21) 
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21,$22) 
             RETURNING *`;
 
         const values = [
-            district, block, routeName, locationType,
+            surveyId,district, block, routeName, locationType,
             shotNumber, ringNumber, startLocName, endLocName,
             parseFloat(latitude || 0), parseFloat(longitude || 0),
             surveyorName, surveyorMobile, baseFilename, submittedBy,
