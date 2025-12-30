@@ -61,33 +61,34 @@ const initDB = async () => {
         `);
 
         // 3. CREATE SURVEYS TABLE (With all correct columns)
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS surveys (
-                id SERIAL PRIMARY KEY,
-                district VARCHAR(255),
-                block VARCHAR(255),
-                route_name VARCHAR(255),
-                location_type VARCHAR(255),
-                shot_number VARCHAR(100),
-                ring_number VARCHAR(100),
-                start_location VARCHAR(255),
-                end_location VARCHAR(255),
-                latitude DECIMAL,
-                longitude DECIMAL,
-                surveyor_name VARCHAR(255),
-                surveyor_mobile VARCHAR(50),
-                generated_filename TEXT,
-                submitted_by VARCHAR(255),
-                survey_date TIMESTAMP,
-                photos JSONB,
-                videos JSONB,
-                gopro JSONB,
-                selfie_path TEXT,
-                remarks TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            );
-        `);
+       await pool.query(`
+    CREATE TABLE IF NOT EXISTS surveys (
+        id SERIAL PRIMARY KEY,
+        district VARCHAR(255),
+        block VARCHAR(255),
+        route_name VARCHAR(255),
+        location_type VARCHAR(255),
+        shot_number VARCHAR(100),
+        ring_number VARCHAR(100),
+        start_location VARCHAR(255),
+        end_location VARCHAR(255),
+        latitude DECIMAL,
+        longitude DECIMAL,
+        surveyor_name VARCHAR(255),
+        surveyor_mobile VARCHAR(50),
+        generated_filename TEXT,
+        submitted_by VARCHAR(255),
+        survey_date TIMESTAMP,
+        photos JSONB,
+        videos JSONB,
+        gopro JSONB,
+        selfie_path TEXT,
+        remarks TEXT,
+        submitter_id VARCHAR(255), -- ADD THIS LINE
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+`);
         console.log("✅ Database is FIXED and READY!");
     } catch (err) {
         console.error("❌ Database setup failed:", err.message);
