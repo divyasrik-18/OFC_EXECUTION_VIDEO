@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 4004;
 
 // Allow your Render Frontend to talk to this Backend
 app.use(cors({
-    origin: ["http://localhost:3000", "https://ofc-frontend.onrender.com"],
+    origin: ["http://localhost:3000", "https://gis-kpj2.onrender.com"],
     credentials: true
 }));
 
@@ -43,15 +43,14 @@ const initDB = async () => {
         console.log("✅ Database Ready!");
         // 2. CREATE USERS TABLE
         await pool.query(`
-    CREATE TABLE IF NOT EXISTS users (
-        id SERIAL PRIMARY KEY,
-        username VARCHAR(255) UNIQUE NOT NULL,
-        password VARCHAR(255) NOT NULL,
-        role VARCHAR(50) DEFAULT 'user',
-        mobile VARCHAR(255),
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- THIS LINE WAS MISSING
-    );
-`);
+            CREATE TABLE IF NOT EXISTS users (
+                id SERIAL PRIMARY KEY,
+                username VARCHAR(255) UNIQUE NOT NULL,
+                password VARCHAR(255) NOT NULL,
+                role VARCHAR(50) DEFAULT 'user'
+            );
+        `);
+
         await pool.query(`
             CREATE TABLE IF NOT EXISTS synology (
                 id SERIAL PRIMARY KEY,
@@ -61,34 +60,33 @@ const initDB = async () => {
         `);
 
         // 3. CREATE SURVEYS TABLE (With all correct columns)
-       await pool.query(`
-    CREATE TABLE IF NOT EXISTS surveys (
-        id SERIAL PRIMARY KEY,
-        district VARCHAR(255),
-        block VARCHAR(255),
-        route_name VARCHAR(255),
-        location_type VARCHAR(255),
-        shot_number VARCHAR(100),
-        ring_number VARCHAR(100),
-        start_location VARCHAR(255),
-        end_location VARCHAR(255),
-        latitude DECIMAL,
-        longitude DECIMAL,
-        surveyor_name VARCHAR(255),
-        surveyor_mobile VARCHAR(50),
-        generated_filename TEXT,
-        submitted_by VARCHAR(255),
-        survey_date TIMESTAMP,
-        photos JSONB,
-        videos JSONB,
-        gopro JSONB,
-        selfie_path TEXT,
-        remarks TEXT,
-        submitter_id VARCHAR(255), -- ADD THIS LINE
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
-`);
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS surveys (
+                id SERIAL PRIMARY KEY,
+                district VARCHAR(255),
+                block VARCHAR(255),
+                route_name VARCHAR(255),
+                location_type VARCHAR(255),
+                shot_number VARCHAR(100),
+                ring_number VARCHAR(100),
+                start_location VARCHAR(255),
+                end_location VARCHAR(255),
+                latitude DECIMAL,
+                longitude DECIMAL,
+                surveyor_name VARCHAR(255),
+                surveyor_mobile VARCHAR(50),
+                generated_filename TEXT,
+                submitted_by VARCHAR(255),
+                survey_date TIMESTAMP,
+                photos JSONB,
+                videos JSONB,
+                gopro JSONB,
+                selfie_path TEXT,
+                remarks TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        `);
         console.log("✅ Database is FIXED and READY!");
     } catch (err) {
         console.error("❌ Database setup failed:", err.message);
