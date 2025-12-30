@@ -64,8 +64,6 @@
 // export const db = pool;
 // export { pool };
 
-
-
 import pkg from 'pg';
 import dotenv from 'dotenv';
 
@@ -73,26 +71,25 @@ dotenv.config();
 
 const { Pool } = pkg;
 
-// This logic allows for both local and Render environments
-const poolConfig = process.env.DATABASE_URL 
-    ? { connectionString: process.env.DATABASE_URL } 
-    : {
-        user: process.env.DB_USER,
-        host: process.env.DB_HOST,
-        database: process.env.DB_NAME,
-        password: process.env.DB_PASSWORD,
-        port: process.env.DB_PORT || 5432,
-    };
-
-// Always enable SSL if we aren't on localhost
-const isLocal = process.env.DB_HOST === 'localhost' || !process.env.DB_HOST;
 const pool = new Pool({
-    ...poolConfig,
-    ssl: isLocal ? false : { rejectUnauthorized: false }
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT || 5432,
+    // Fix: Ensure SSL is handled correctly for Render
+    ssl: {
+        rejectUnauthorized: false
+    }
+});
+
+pool.on('connect', () => {
+    console.log(`✅ Connected to Database: ${process.env.DB_NAME}`);
 });
 
 pool.on('error', (err) => {
-    console.error('Unexpected error on idle client', err);
+    console.error('❌ Unexpected error on idle client', err);
+    process.exit(-1);
 });
 
 export const db = pool;

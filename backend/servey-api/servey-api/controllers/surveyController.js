@@ -372,7 +372,7 @@ export const updateSurveyDetails = async (req, res) => {
         `;
 
         const values = [
-            district, block, routeName, surveyorName, locationType, shotNumber,
+           district, block, routeName, surveyorName, locationType, shotNumber,
     parseFloat(latitude || 0), parseFloat(longitude || 0), remarks,
     JSON.stringify(photoPaths), JSON.stringify(videoPaths), JSON.stringify(goproPaths),
     selfiePath, 
