@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 4004;
 
 // Allow your Render Frontend to talk to this Backend
 app.use(cors({
-    origin: ["http://localhost:3000", "https://gis-kpj2.onrender.com"],
+    origin: ["http://localhost:3000", "https://ofc-backend.onrender.com", "https://ofc-frontend.onrender.com"],
     credentials: true
 }));
 
