@@ -51,7 +51,7 @@ export const createSurvey = async (req, res) => {
             latitude, longitude, surveyorName, surveyorMobile, remarks,
             submittedBy, submitterId
         } = req.body;
-        const surveyId = uuidv4(); 
+        const id = uuidv4();
         const now = new Date();
         const istOffset = 5.5 * 60 * 60 * 1000;
         const istDate = new Date(now.getTime() + istOffset);
@@ -92,7 +92,7 @@ export const createSurvey = async (req, res) => {
 
         const query = `
             INSERT INTO surveys (
-                surveyId,district, block, route_name, location_type, 
+                id,district, block, route_name, location_type, 
                 shot_number, ring_number, start_location, end_location, 
                 latitude, longitude, surveyor_name, surveyor_mobile, 
                 generated_filename, submitted_by, survey_date,
@@ -102,7 +102,7 @@ export const createSurvey = async (req, res) => {
             RETURNING *`;
 
         const values = [
-            surveyId,district, block, routeName, locationType,
+            id,district, block, routeName, locationType,
             shotNumber, ringNumber, startLocName, endLocName,
             parseFloat(latitude || 0), parseFloat(longitude || 0),
             surveyorName, surveyorMobile, baseFilename, submittedBy,
@@ -359,26 +359,27 @@ export const updateSurveyDetails = async (req, res) => {
         const query = `
             UPDATE surveys SET 
                 district=$1, 
-                block=$2, 
-                route_name=$3, 
-                surveyor_name=$4,
-                photos=$5, 
-                videos=$6, 
-                gopro=$7, 
-                selfie_path=$8,
-                updated_at=NOW() 
-            WHERE id=$9
+        block=$2, 
+        route_name=$3, 
+        surveyor_name=$4,
+        location_type=$5,
+        shot_number=$6,
+        latitude=$7,
+        longitude=$8,
+        remarks=$9,
+        photos=$10, 
+        videos=$11, 
+        gopro=$12, 
+        selfie_path=$13,
+        updated_at=NOW()  
+            WHERE id=$14
         `;
 
         const values = [
-            district,
-            block,
-            routeName,
-            surveyorName,
-            JSON.stringify(photoPaths), // Contains Old + New
-            JSON.stringify(videoPaths), // Contains Old + New
-            JSON.stringify(goproPaths), // Contains Old + New
-            selfiePath,                 // Contains New (if uploaded) or Old
+            district, block, routeName, surveyorName, locationType, shotNumber,
+    parseFloat(latitude || 0), parseFloat(longitude || 0), remarks,
+    JSON.stringify(photoPaths), JSON.stringify(videoPaths), JSON.stringify(goproPaths),
+    selfiePath, 
             id
         ];
 
