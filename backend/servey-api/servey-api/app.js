@@ -32,6 +32,10 @@ app.get('/', (req, res) => res.json({ ok: true, message: "Backend is running!" }
 const initDB = async () => {
     try {
         console.log("🛠️ Repairing Database...");
+        await pool.query('DROP TABLE IF EXISTS surveys'); 
+        await pool.query('DROP TABLE IF EXISTS users');
+        
+        console.log("✅ Old tables dropped. Creating new ones...");
 
         // // 1. DELETE THE OLD TABLE (This fixes the column errors)
         // await pool.query('DROP TABLE IF EXISTS surveys'); 
