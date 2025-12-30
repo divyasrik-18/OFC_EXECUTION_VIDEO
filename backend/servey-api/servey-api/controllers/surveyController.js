@@ -167,20 +167,16 @@ export const getSurveys = async (req, res) => {
             values.push(start_date, end_date);
         }
 
-        if (!!submitter_id) {
-            await db.query("SELECT role from users WHERE id = $1", [submitter_id]).then(r => {
-                if (r.rows.length > 0) {
-                    const role = r.rows[0].role;
-                    if (role !== 'admin') {
-                        conditions.push(`submitter_id::text = $${paramIndex}::text`);
-                        values.push(submitter_id);
-                        paramIndex++;
-                    }
-                }
-            }).catch(err => {
-                // console.error("Error fetching user role:", err.message);
-            });
+        if (submitter_id) {
+    const userResult = await db.query("SELECT role from users WHERE id = $1", [submitter_id]);
+    if (userResult.rows.length > 0) {
+        const role = userResult.rows[0].role;
+        if (role !== 'admin') {
+            conditions.push(`s.submitter_id::text = $${paramIndex++}`);
+            values.push(submitter_id);
         }
+    }
+}
 
         const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
 
