@@ -14,4 +14,6 @@ root.render(
 );
 
 // 2. CHANGE THIS LINE FROM unregister() TO register()
-serviceWorkerRegistration.register();
+// serviceWorkerRegistration.register();
+
+serviceWorkerRegistration.unregister();
