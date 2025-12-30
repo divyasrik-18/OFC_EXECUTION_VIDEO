@@ -1,0 +1,118 @@
+// controllers/surveyController.js (ESM)
+import { pool, query as dbQuery } from '../db.js';
+import * as syno from '../services/synologyService.js';
+import { buildFilename, folderPath } from '../utils/filename.js';
+import { v4 as uuidv4 } from 'uuid';
+
+export async function createSurvey(req, res) {
+  const client = await pool.connect();
+  try {
+    const {
+      district, block, route_name, survey_date, start_location, end_location,
+      ring_no, short_no, location_type, remarks, slotno, surveyor_id,
+      surveyor_name, surveyor_mobile
+    } = req.body;
+
+    if (!district || !route_name) return res.status(400).json({ error: 'district and route_name required' });
+
+    const surveyId = uuidv4();
+    const now = new Date().toISOString();
+    const insertSurveyText = `
+      INSERT INTO surveys(id, district, block, route_name, survey_date, start_location, end_location,
+        ring_no, short_no, location_type, remarks, location, surveyor_id, surveyor_name, surveyor_mobile,
+        status, created_at, updated_at)
+      VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)
+      RETURNING *;
+    `;
+    const locationJson = null;
+    const insertValues = [surveyId, district, block, route_name, survey_date || now, start_location, end_location,
+      ring_no, short_no, location_type, remarks, locationJson, surveyor_id, surveyor_name, surveyor_mobile,
+      'draft', now, now];
+
+    await client.query('BEGIN');
+    const r = await client.query(insertSurveyText, insertValues);
+
+    const uploadedMedia = [];
+
+    const surveyNameSafe = `survey_${surveyId.slice(0, 8)}`;
+    const remoteFolder = folderPath({ district, route_name, survey_name: surveyNameSafe, survey_date });
+
+    await syno.ensureFolder(remoteFolder);
+
+    // Depending on multer usage, req.files can be an object keyed by field name
+    const filesPhotos = (req.files && req.files.photos) ? req.files.photos : [];
+    const filesSelfie = (req.files && req.files.selfie) ? req.files.selfie : [];
+    const filesVideos = (req.files && req.files.videos) ? req.files.videos : [];
+
+    // Merge selfie into photos array so it's processed as a photo
+    if (filesSelfie.length) {
+      filesPhotos.push(...filesSelfie);
+    }
+
+    const processFile = async (file, type) => {
+      const filename = buildFilename({
+        district, block, slotno, date: survey_date || new Date(),
+        originalname: file.originalname
+      });
+      await syno.uploadFileToPath(remoteFolder, filename, file.buffer, file.mimetype);
+      const fileUrl = `${remoteFolder}/${filename}`; // store path; adapt to your public URL logic
+      const mediaId = uuidv4();
+      await client.query(
+        `INSERT INTO media(id, survey_id, type, url, metadata, created_at) VALUES($1,$2,$3,$4,$5,$6)`,
+        [mediaId, surveyId, type, fileUrl, JSON.stringify({ originalname: file.originalname, mimetype: file.mimetype, size: file.size }), new Date().toISOString()]
+      );
+      uploadedMedia.push({ id: mediaId, type, url: fileUrl });
+      return fileUrl;
+    };
+
+    for (const f of filesPhotos) await processFile(f, 'photo');
+    for (const f of filesVideos) await processFile(f, 'video');
+
+    const photoUrls = uploadedMedia.filter(m => m.type === 'photo').map(m => m.url);
+    const videoUrls = uploadedMedia.filter(m => m.type === 'video').map(m => m.url);
+
+    await client.query(`UPDATE surveys SET photos = $1::jsonb, videos = $2::jsonb WHERE id = $3`, [JSON.stringify(photoUrls), JSON.stringify(videoUrls), surveyId]);
+
+    await client.query('COMMIT');
+
+    res.status(201).json({ survey: r.rows[0], media: uploadedMedia });
+
+  } catch (err) {
+    await client.query('ROLLBACK').catch(() => {});
+    console.error(err);
+    res.status(500).json({ error: err.message || 'Server error' });
+  } finally {
+    client.release();
+  }
+}
+
+export async function getSurvey(req, res) {
+  const id = req.params.id;
+  const { rows } = await dbQuery('SELECT * FROM surveys WHERE id=$1', [id]);
+  if (!rows.length) return res.status(404).json({ error: 'Not found' });
+  const media = (await dbQuery('SELECT * FROM media WHERE survey_id=$1', [id])).rows;
+  res.json({ survey: rows[0], media });
+}
+
+export async function submitSurvey(req, res) {
+  const id = req.params.id;
+  const { rows } = await dbQuery('SELECT * FROM surveys WHERE id=$1', [id]);
+  if (!rows.length) return res.status(404).json({ error: 'Not found' });
+  await dbQuery('UPDATE surveys SET status=$1, updated_at=now() WHERE id=$2', ['submitted', id]);
+  res.json({ ok: true, id });
+}
+
+export async function cancelSurvey(req, res) {
+  const id = req.params.id;
+  const mediaRows = (await dbQuery('SELECT * FROM media WHERE survey_id=$1', [id])).rows;
+  for (const m of mediaRows) {
+    try {
+      await syno.deleteFile(m.url);
+    } catch (err) {
+      console.warn('delete failed for', m.url, err?.message);
+    }
+  }
+  await dbQuery('DELETE FROM media WHERE survey_id=$1', [id]);
+  await dbQuery('DELETE FROM surveys WHERE id=$1', [id]);
+  res.json({ ok: true });
+}
