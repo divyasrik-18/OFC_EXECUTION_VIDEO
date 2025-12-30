@@ -43,14 +43,15 @@ const initDB = async () => {
         console.log("✅ Database Ready!");
         // 2. CREATE USERS TABLE
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS users (
-                id SERIAL PRIMARY KEY,
-                username VARCHAR(255) UNIQUE NOT NULL,
-                password VARCHAR(255) NOT NULL,
-                role VARCHAR(50) DEFAULT 'user'
-            );
-        `);
-
+    CREATE TABLE IF NOT EXISTS users (
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(255) UNIQUE NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        role VARCHAR(50) DEFAULT 'user',
+        mobile VARCHAR(255),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- THIS LINE WAS MISSING
+    );
+`);
         await pool.query(`
             CREATE TABLE IF NOT EXISTS synology (
                 id SERIAL PRIMARY KEY,
