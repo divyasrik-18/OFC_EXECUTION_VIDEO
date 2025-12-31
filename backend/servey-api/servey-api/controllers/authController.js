@@ -2,6 +2,7 @@
 import { db } from '../config/db.js';
 import bcrypt from 'bcryptjs'; // Ensure you have installed 'bcryptjs' or 'bcrypt'
 import jwt from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -13,13 +14,13 @@ export const registerUser = async (req, res) => {
     try {
         console.log("Register Request:", req.body);
 
-        const { username, password, role } = req.body;
+        const { username, password, role, mobile } = req.body;
 
         if (!username || !password) {
             return res.status(400).json({ error: "Username and Password are required" });
         }
 
-        // *** FIX: Use db.query ***
+        // Check if user exists
         const userExist = await db.query("SELECT * FROM users WHERE username = $1", [username]);
         if (userExist.rows.length > 0) {
             return res.status(400).json({ error: "Username already taken" });
@@ -29,10 +30,13 @@ export const registerUser = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        // *** FIX: Use db.query ***
+        // ✅ FIX 1: Define the userId variable
+        const userId = uuidv4(); 
+
+        // ✅ FIX 2 & 3: Match column count (5 columns) with placeholder count ($1 to $5)
         const newUser = await db.query(
-            "INSERT INTO users (username, password, role) VALUES ($1, $2, $3) RETURNING id, username, role",
-            [username, hashedPassword, role || 'user']
+            "INSERT INTO users (id, username, password, role, mobile) VALUES ($1, $2, $3, $4, $5) RETURNING id, username, role, mobile",
+            [userId, username, hashedPassword, role || 'user', mobile]
         );
 
         res.json({ success: true, user: newUser.rows[0] });

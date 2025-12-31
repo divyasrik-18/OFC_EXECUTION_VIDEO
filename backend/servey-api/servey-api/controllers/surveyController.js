@@ -51,7 +51,7 @@ export const createSurvey = async (req, res) => {
             latitude, longitude, surveyorName, surveyorMobile, remarks,
             submittedBy, submitterId
         } = req.body;
-
+        const id = uuidv4();
         const now = new Date();
         const istOffset = 5.5 * 60 * 60 * 1000;
         const istDate = new Date(now.getTime() + istOffset);
@@ -92,17 +92,17 @@ export const createSurvey = async (req, res) => {
 
         const query = `
             INSERT INTO surveys (
-                district, block, route_name, location_type, 
+                id,district, block, route_name, location_type, 
                 shot_number, ring_number, start_location, end_location, 
                 latitude, longitude, surveyor_name, surveyor_mobile, 
                 generated_filename, submitted_by, survey_date,
                 photos, videos, gopro, selfie_path, remarks, submitter_id
             ) 
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21) 
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21,$22) 
             RETURNING *`;
 
         const values = [
-            district, block, routeName, locationType,
+            id,district, block, routeName, locationType,
             shotNumber, ringNumber, startLocName, endLocName,
             parseFloat(latitude || 0), parseFloat(longitude || 0),
             surveyorName, surveyorMobile, baseFilename, submittedBy,
@@ -167,20 +167,16 @@ export const getSurveys = async (req, res) => {
             values.push(start_date, end_date);
         }
 
-        if (!!submitter_id) {
-            await db.query("SELECT role from users WHERE id = $1", [submitter_id]).then(r => {
-                if (r.rows.length > 0) {
-                    const role = r.rows[0].role;
-                    if (role !== 'admin') {
-                        conditions.push(`submitter_id::text = $${paramIndex}::text`);
-                        values.push(submitter_id);
-                        paramIndex++;
-                    }
-                }
-            }).catch(err => {
-                // console.error("Error fetching user role:", err.message);
-            });
+        if (submitter_id) {
+    const userResult = await db.query("SELECT role from users WHERE id = $1", [submitter_id]);
+    if (userResult.rows.length > 0) {
+        const role = userResult.rows[0].role;
+        if (role !== 'admin') {
+            conditions.push(`s.submitter_id::text = $${paramIndex++}`);
+            values.push(submitter_id);
         }
+    }
+}
 
         const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
 
@@ -359,26 +355,27 @@ export const updateSurveyDetails = async (req, res) => {
         const query = `
             UPDATE surveys SET 
                 district=$1, 
-                block=$2, 
-                route_name=$3, 
-                surveyor_name=$4,
-                photos=$5, 
-                videos=$6, 
-                gopro=$7, 
-                selfie_path=$8,
-                updated_at=NOW() 
-            WHERE id=$9
+        block=$2, 
+        route_name=$3, 
+        surveyor_name=$4,
+        location_type=$5,
+        shot_number=$6,
+        latitude=$7,
+        longitude=$8,
+        remarks=$9,
+        photos=$10, 
+        videos=$11, 
+        gopro=$12, 
+        selfie_path=$13,
+        updated_at=NOW()  
+            WHERE id=$14
         `;
 
         const values = [
-            district,
-            block,
-            routeName,
-            surveyorName,
-            JSON.stringify(photoPaths), // Contains Old + New
-            JSON.stringify(videoPaths), // Contains Old + New
-            JSON.stringify(goproPaths), // Contains Old + New
-            selfiePath,                 // Contains New (if uploaded) or Old
+           district, block, routeName, surveyorName, locationType, shotNumber,
+    parseFloat(latitude || 0), parseFloat(longitude || 0), remarks,
+    JSON.stringify(photoPaths), JSON.stringify(videoPaths), JSON.stringify(goproPaths),
+    selfiePath, 
             id
         ];
 
