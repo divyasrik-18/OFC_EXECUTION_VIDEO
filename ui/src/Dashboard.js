@@ -1416,7 +1416,8 @@ const GlobalLoader = () => (
                 // applyFilters(mergedData);
                 if (pagination) {
                     setTotalPages(pagination.totalPages || 1);
-                    setTotalRecordsCount(pagination.totalRecords || 0); // Sets full count (e.g. 570)
+                    // setTotalRecordsCount(pagination.totalRecords || 0); // Sets full count (e.g. 570)
+                    setTotalRecordsCount(pagination.total || 0); 
                 }
 const lines = []; 
                 mergedData.forEach(s => { 
