@@ -1343,7 +1343,7 @@ const GlobalLoader = () => (
              if (!surveys || surveys.length === 0) {
                 setSubmittedSurveys([]);
                 setTotalPages(1);
-                // setTotalRecordsCount(0);
+                setTotalRecordsCount(0);
                 // setUserRoutes([]); --edit
                 return;
             }
@@ -1416,7 +1416,7 @@ const GlobalLoader = () => (
                 // applyFilters(mergedData);
                 if (pagination) {
                     setTotalPages(pagination.totalPages || 1);
-                    setTotalRecordsCount(pagination.total || 0); // Sets full count (e.g. 570)
+                    setTotalRecordsCount(pagination.totalRecords || 0); // Sets full count (e.g. 570)
                 }
 const lines = []; 
                 mergedData.forEach(s => { 
@@ -1429,8 +1429,8 @@ const lines = [];
                 setUserRoutes(lines);
             }            
         } catch (e) { console.error("Fetch Error", e); }
-         setTotalRecordsCount(0); 
-    }, [applyFilters, currentPage,  role,user?.username, searchDist, searchBlock, searchGeneric, searchDateFrom, searchDateTo,loginUserId]);
+        //  setTotalRecordsCount(0); 
+    }, [applyFilters, currentPage,  role,user?.username, searchDist, searchBlock, searchGeneric, searchDateFrom, searchDateTo]);
 
     useEffect(() => {
         refreshData();
@@ -1608,9 +1608,7 @@ const submitBtnStyle = {
                      {role === 'admin' && <button onClick={() => setShowAddUser(true)} style={styles.btnWhite}>+ User</button>}
                     <button onClick={() => { setEditingSurvey(null); setIsViewMode(false); setShowSurveyForm(true); }} style={styles.btnGreen}>+ New</button>
                     {/* <button onClick={() => setShowSurveyTable(true)} style={styles.btnWhite}>Data ({submittedSurveys.length})</button> */}
-                    <button onClick={() => setShowSurveyTable(true)} style={styles.btnWhite}>
-    Data ({totalRecordsCount})
-</button>
+                    <button onClick={() => setShowSurveyTable(true)} style={styles.btnWhite}>Data ({totalRecordsCount})</button>
                     {/* {role === 'admin' && <button onClick={() => setShowUserStatus(true)} style={styles.btnWhite}>Logs</button>} */}
                     <button onClick={onLogout} style={styles.btnRed}>Logout</button>
                 </div>
