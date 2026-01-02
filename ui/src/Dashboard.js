@@ -645,7 +645,7 @@
 // const Dashboard = ({ user, role, onLogout, logAction }) => {
 //     const loginUserId = localStorage.getItem("id") || '';
 
-    
+
 //     // --- 1. MOVED HOOKS INSIDE COMPONENT ---
 //     const [isGlobalLoading, setIsGlobalLoading] = useState(false);
 //     const [showAddUser, setShowAddUser] = useState(false);
@@ -805,7 +805,7 @@
 //                     search: searchGeneric || ""
 //                 }
 //             });
-            
+
 //             const { surveys, pagination } = response.data;
 
 //             // --- ADDON: Handle Empty/Zero Records ---
@@ -827,7 +827,7 @@
 //                         const cleanPath = path.replace(/[[\]"']/g, ''); 
 //                         return `${API_BASE}/surveys/read-file?path=${encodeURIComponent(cleanPath)}&mode=open&t=${Date.now()}`;
 //                     };
-                    
+
 //                     const getFileName = (f) => (f.filename || f.path || f.url || '').toLowerCase();
 //                     let videoPool = mFiles.filter(f => f.type === 'video' || f.type === 'live_video' || f.type === 'gopro_video' || f.type === 'gopro' || (f.mimetype && f.mimetype.startsWith('video')));
 //                     let imagePool = mFiles.filter(f => f.type === 'photo' || f.type === 'site_photo' || f.type === 'selfie' || (f.mimetype && f.mimetype.startsWith('image')));
@@ -875,7 +875,7 @@
 //                 });
 
 //                 setSubmittedSurveys(mergedData.sort((a, b) => new Date(b.lastModifiedTime) - new Date(a.lastModifiedTime)));
-                
+
 //                 // --- ADDON: Update Real Total Data Count ---
 //                 if (pagination) {
 //                     setTotalPages(pagination.totalPages || 1);
@@ -903,10 +903,10 @@
 //     e.preventDefault();
 //     setRegError('');
 //     setRegSuccess('');
-    
+
 //     try {
 //         const res = await axios.post(`${API_BASE}/users/register`, regData);
-        
+
 //         if (res.status === 201 || res.data.success) {
 //             setRegSuccess("User Created Successfully!");
 //             // Reset and close after 2 seconds
@@ -1071,7 +1071,7 @@
 //         onClose={() => { setShowAddUser(false); setRegError(''); setRegSuccess(''); }}
 //     >
 //         <form onSubmit={handleAdminRegister} style={{ maxWidth: '400px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '15px' }}>
-            
+
 //             {/* Inline Message Dialogue */}
 //             {regError && (
 //                 <div style={{ background: '#ffebee', color: '#c62828', padding: '10px', borderRadius: '4px', fontSize: '13px', textAlign: 'center', border: '1px solid #ef9a9a' }}>
@@ -1182,66 +1182,66 @@ const SurveyIcon = L.divIcon({
 // --- CONSTANTS ---
 const API_BASE = process.env.REACT_APP_API_URL;
 
-const DISTRICT_COORDS = { 
-    "Ambedkar Nagar": [26.4416, 82.5925], 
-    "Ayodhya": [26.7992, 82.2023], 
-    "Azamgarh": [26.0669, 83.1861], 
-    "Ballia": [25.8398, 84.1523], 
-    "Balrampur": [27.4265, 82.1760], 
-    "Banda": [25.4800, 80.3340], 
-    "Barabanki": [26.9388, 81.1912], 
-    "Basti": [26.7937, 82.4700], 
-    "Bhadohi": [25.3941, 82.5709], 
-    "Deoria": [26.5056, 83.7780], 
-    "Ghazipur": [25.5794, 83.5684], 
-    "Gonda": [27.1303, 81.9669], 
-    "Gorakhpur": [26.7606, 83.3732], 
-    "Kushi Nagar": [26.9031, 83.8967], 
-    "Maharajganj": [27.1437, 83.5645], 
-    "Mau": [25.9452, 83.5599], 
-    "Mirzapur": [25.1337, 82.5644], 
-    "Sant Kabeer Nagar": [26.7329, 83.0261], 
-    "Siddharth Nagar": [27.2848, 82.7845], 
-    "Varanasi": [25.3176, 82.9739] 
+const DISTRICT_COORDS = {
+    "Ambedkar Nagar": [26.4416, 82.5925],
+    "Ayodhya": [26.7992, 82.2023],
+    "Azamgarh": [26.0669, 83.1861],
+    "Ballia": [25.8398, 84.1523],
+    "Balrampur": [27.4265, 82.1760],
+    "Banda": [25.4800, 80.3340],
+    "Barabanki": [26.9388, 81.1912],
+    "Basti": [26.7937, 82.4700],
+    "Bhadohi": [25.3941, 82.5709],
+    "Deoria": [26.5056, 83.7780],
+    "Ghazipur": [25.5794, 83.5684],
+    "Gonda": [27.1303, 81.9669],
+    "Gorakhpur": [26.7606, 83.3732],
+    "Kushi Nagar": [26.9031, 83.8967],
+    "Maharajganj": [27.1437, 83.5645],
+    "Mau": [25.9452, 83.5599],
+    "Mirzapur": [25.1337, 82.5644],
+    "Sant Kabeer Nagar": [26.7329, 83.0261],
+    "Siddharth Nagar": [27.2848, 82.7845],
+    "Varanasi": [25.3176, 82.9739]
 };
 
-const DATA_HIERARCHY = { 
-    blocks: { 
-        "Ambedkar Nagar": ["Bhiti", "Ram Nagar", "Akbarpur", "Baskhari", "Bhiyawan", "Jahangir Ganj", "Jalal Pur", "Katehari", "Tanda"], 
-        "Ayodhya": ["Bikapur", "Pura Bazar", "Amaniganj", "Hariyangatanganj", "Mawai", "Milkipur", "Rudauli", "Sohawal", "Tarun"], 
-        "Azamgarh": ["Mehnagar", "Azmatgarh", "Jahanaganj", "Rani Ki Sarai", "Lalganj", "Mahrajganj", "Palhani", "Mirzapur", "Tahbarpur", "Ahiraula", "Haraiya", "Koilsa", "Martinganj", "Mohammadpur", "Palhana", "Pawai", "Thekma", "Bilariyaganj", "Tarwa", "Phulpur", "Sathiyaon"], 
-        "Ballia": ["Garwar", "Bairia", "Bansdih", "Chilkahar", "Dubhar", "Maniar", "Rasra", "Reoti", "Belhari", "Beruarbari", "Hanumanganj", "Navanagar", "Pandah", "Sohanv", "Siar"], 
-        "Balrampur": ["Shriduttganj", "Balrampur", "Gaisri", "Harriya Satgharwa", "Pachpedwa", "Rahera Bazar", "Gaindas Bujurg", "Tulsipur", "Utraula"], 
-        "Banda": ["Bisanda", "Tindwari", "Badokhar Khurd"], 
-        "Barabanki": ["Suratganj", "Dariyabad", "Ramnagar", "Sirauli Gauspur", "Bani Kodar", "Haidargarh", "Nindaura", "Puredalai", "Trivediganj"], 
-        "Basti": ["Saltaua Gopal Pur", "Bahadurpur", "Basti", "Dubauliya", "Gaur", "Harraiya", "Kaptanganj", "Bankati", "Kudraha", "Paras Rampur", "Rudauli", "Sau Ghat", "Ramnagar", "Vikram Jot"], 
-        "Bhadohi": ["Deegh"], 
-        "Deoria": ["Bhatni", "Baitalpur", "Bankata", "Barhaj", "Bhagalpur", "Bhaluani", "Bhatpar Rani", "Deoria Sadar", "Desai Deoria", "Gauri Bazar", "Lar", "Pathar Dewa", "Rampur Karkhana", "Rudrapur", "Salempur", "Tarkalua"], 
-        "Ghazipur": ["Nagra", "Mohammadabad", "Virno"], 
-        "Gonda": ["Mankapur", "Haldharmau", "Babhanjot", "Belsar", "Chhapia", "Colonelganj", "Itiyathok", "Jhanjhari", "Katra Bazar", "Mujehana", "Pandri Kripal", "Paraspur", "Rupaideeh", "Tarabganj", "Nawabganj", "Wazirganj"], 
-        "Gorakhpur": ["Khorabar", "Pali", "Pipraich", "Brahmpur", "Sardarngar", "Bharohiya", "Bhathat", "Campierganj", "Belghat", "Chargawan", "Gagaha", "Gola", "Jangal Kaudia", "Kauri Ram", "Khajni", "Piprauli", "Sahjanawa", "Uruwa"], 
-        "Kushi Nagar": ["Dudhahi", "Fazilnagar", "Hata", "Kaptainganj", "Kasaya", "Khadda", "Motichak", "Nebua Naurangia", "Padrauna", "Ramkola", "Seorahi", "Sukrauli", "Tamkuhiraj", "Vishunpura"], 
-        "Maharajganj": ["Dhani", "Ghughli", "Lakshmipur", "Bridgemanganj", "Mithaura", "Nautanwa", "Nichlaul", "Pharenda", "Mahrajganj", "Paniyara", "Partawal", "Siswa"], 
-        "Mau": ["Atraulia", "Dohari Ghat", "Pardaha", "Badraon", "Fatehpur Madaun", "Ghosi", "Kopaganj", "Mohammadabad Gohana", "Ratanpura"], 
-        "Mirzapur": ["Lalganj"], 
-        "Sant Kabeer Nagar": ["Baghauli", "Belhar Kala", "Hainsar Bazar", "Khalilabad", "Mehdawal", "Nath Nagar", "Pauli", "Santha", "Semariyawan"], 
-        "Siddharth Nagar": ["Barhni", "Itwa", "Lotan", "Shohartgarh", "Ranipur", "Bansi", "Bhanwapur", "Birdpur", "Domariyaganj", "Jogia", "Khesraha", "Khuniyaon", "Mithwal", "Naugarh", "Uska Bazar"], 
-        "Varanasi": ["Baragaon", "Arajiline", "Harahua", "Pindra", "Sevapuri"] 
-    }, 
-    spans: {}, 
-    rings: {} 
+const DATA_HIERARCHY = {
+    blocks: {
+        "Ambedkar Nagar": ["Bhiti", "Ram Nagar", "Akbarpur", "Baskhari", "Bhiyawan", "Jahangir Ganj", "Jalal Pur", "Katehari", "Tanda"],
+        "Ayodhya": ["Bikapur", "Pura Bazar", "Amaniganj", "Hariyangatanganj", "Mawai", "Milkipur", "Rudauli", "Sohawal", "Tarun"],
+        "Azamgarh": ["Mehnagar", "Azmatgarh", "Jahanaganj", "Rani Ki Sarai", "Lalganj", "Mahrajganj", "Palhani", "Mirzapur", "Tahbarpur", "Ahiraula", "Haraiya", "Koilsa", "Martinganj", "Mohammadpur", "Palhana", "Pawai", "Thekma", "Bilariyaganj", "Tarwa", "Phulpur", "Sathiyaon"],
+        "Ballia": ["Garwar", "Bairia", "Bansdih", "Chilkahar", "Dubhar", "Maniar", "Rasra", "Reoti", "Belhari", "Beruarbari", "Hanumanganj", "Navanagar", "Pandah", "Sohanv", "Siar"],
+        "Balrampur": ["Shriduttganj", "Balrampur", "Gaisri", "Harriya Satgharwa", "Pachpedwa", "Rahera Bazar", "Gaindas Bujurg", "Tulsipur", "Utraula"],
+        "Banda": ["Bisanda", "Tindwari", "Badokhar Khurd"],
+        "Barabanki": ["Suratganj", "Dariyabad", "Ramnagar", "Sirauli Gauspur", "Bani Kodar", "Haidargarh", "Nindaura", "Puredalai", "Trivediganj"],
+        "Basti": ["Saltaua Gopal Pur", "Bahadurpur", "Basti", "Dubauliya", "Gaur", "Harraiya", "Kaptanganj", "Bankati", "Kudraha", "Paras Rampur", "Rudauli", "Sau Ghat", "Ramnagar", "Vikram Jot"],
+        "Bhadohi": ["Deegh"],
+        "Deoria": ["Bhatni", "Baitalpur", "Bankata", "Barhaj", "Bhagalpur", "Bhaluani", "Bhatpar Rani", "Deoria Sadar", "Desai Deoria", "Gauri Bazar", "Lar", "Pathar Dewa", "Rampur Karkhana", "Rudrapur", "Salempur", "Tarkalua"],
+        "Ghazipur": ["Nagra", "Mohammadabad", "Virno"],
+        "Gonda": ["Mankapur", "Haldharmau", "Babhanjot", "Belsar", "Chhapia", "Colonelganj", "Itiyathok", "Jhanjhari", "Katra Bazar", "Mujehana", "Pandri Kripal", "Paraspur", "Rupaideeh", "Tarabganj", "Nawabganj", "Wazirganj"],
+        "Gorakhpur": ["Khorabar", "Pali", "Pipraich", "Brahmpur", "Sardarngar", "Bharohiya", "Bhathat", "Campierganj", "Belghat", "Chargawan", "Gagaha", "Gola", "Jangal Kaudia", "Kauri Ram", "Khajni", "Piprauli", "Sahjanawa", "Uruwa"],
+        "Kushi Nagar": ["Dudhahi", "Fazilnagar", "Hata", "Kaptainganj", "Kasaya", "Khadda", "Motichak", "Nebua Naurangia", "Padrauna", "Ramkola", "Seorahi", "Sukrauli", "Tamkuhiraj", "Vishunpura"],
+        "Maharajganj": ["Dhani", "Ghughli", "Lakshmipur", "Bridgemanganj", "Mithaura", "Nautanwa", "Nichlaul", "Pharenda", "Mahrajganj", "Paniyara", "Partawal", "Siswa"],
+        "Mau": ["Atraulia", "Dohari Ghat", "Pardaha", "Badraon", "Fatehpur Madaun", "Ghosi", "Kopaganj", "Mohammadabad Gohana", "Ratanpura"],
+        "Mirzapur": ["Lalganj"],
+        "Sant Kabeer Nagar": ["Baghauli", "Belhar Kala", "Hainsar Bazar", "Khalilabad", "Mehdawal", "Nath Nagar", "Pauli", "Santha", "Semariyawan"],
+        "Siddharth Nagar": ["Barhni", "Itwa", "Lotan", "Shohartgarh", "Ranipur", "Bansi", "Bhanwapur", "Birdpur", "Domariyaganj", "Jogia", "Khesraha", "Khuniyaon", "Mithwal", "Naugarh", "Uska Bazar"],
+        "Varanasi": ["Baragaon", "Arajiline", "Harahua", "Pindra", "Sevapuri"]
+    },
+    spans: {},
+    rings: {}
 };
 
-const TYPE_CODES = { 
-    "HDD Start Point": "HSP", 
-    "HDD End Point": "HEP", 
-    "Chamber Location": "CHM", 
-    "GP Location": "GPL", 
-    "Blowing Start Point": "BSP", 
-    "Blowing End Point": "BEP", 
-    "Coupler location": "CPL", 
-    "splicing": "SPL", 
-    "Other": "OTH" 
+const TYPE_CODES = {
+    "HDD Start Point": "HSP",
+    "HDD End Point": "HEP",
+    "Chamber Location": "CHM",
+    "GP Location": "GPL",
+    "Blowing Start Point": "BSP",
+    "Blowing End Point": "BEP",
+    "Coupler location": "CPL",
+    "splicing": "SPL",
+    "Other": "OTH"
 };
 
 // --- HELPERS ---
@@ -1263,7 +1263,7 @@ const Dashboard = ({ user, role, onLogout, logAction }) => {
     const [isGlobalLoading, setIsGlobalLoading] = useState(false);
     const [showAddUser, setShowAddUser] = useState(false);
     const [regData, setRegData] = useState({ username: '', mobile: '', password: '', role: 'user' });
-    const [totalRecordsCount, setTotalRecordsCount] = useState(0); 
+    const [totalRecordsCount, setTotalRecordsCount] = useState(0);
 
     const [selectedDistrict, setSelectedDistrict] = useState(''); const [selectedBlock, setSelectedBlock] = useState(''); const [selectedSpan, setSelectedSpan] = useState(''); const [selectedRing, setSelectedRing] = useState('');
     const [mapCenter, setMapCenter] = useState([26.8467, 80.9462]); const [mapZoom, setMapZoom] = useState(7);
@@ -1293,16 +1293,16 @@ const Dashboard = ({ user, role, onLogout, logAction }) => {
     const [filterStart, setFilterStart] = useState('');
     const [filterEnd, setFilterEnd] = useState('');
     const [regError, setRegError] = useState('');
-const [regSuccess, setRegSuccess] = useState('');
+    const [regSuccess, setRegSuccess] = useState('');
     const blockOptionsModal = searchDist ? DATA_HIERARCHY.blocks[searchDist] || [] : [];
-const GlobalLoader = () => (
+    const GlobalLoader = () => (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(255, 255, 255, 0.7)', zIndex: 99999, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
             <div className="spinner" style={{ width: '50px', height: '50px', border: '5px solid #f3f3f3', borderTop: '5px solid #1a237e', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
             <p style={{ marginTop: '10px', fontWeight: 'bold', color: '#1a237e' }}>Processing...</p>
             <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
         </div>
     );
-     useEffect(() => {
+    useEffect(() => {
         const reqInt = axios.interceptors.request.use((config) => { setIsGlobalLoading(true); return config; });
         const resInt = axios.interceptors.response.use(
             (response) => { setIsGlobalLoading(false); return response; },
@@ -1321,7 +1321,7 @@ const GlobalLoader = () => (
     }, []);
 
     const refreshData = useCallback(async () => {
-         if (!loginUserId && role !== 'admin') return;
+        if (!loginUserId && role !== 'admin') return;
 
         try {
 
@@ -1340,7 +1340,7 @@ const GlobalLoader = () => (
                     }
                 });
             const { surveys, pagination } = response.data;
-             if (!surveys || surveys.length === 0) {
+            if (!surveys || surveys.length === 0) {
                 setSubmittedSurveys([]);
                 setTotalPages(1);
                 setTotalRecordsCount(0);
@@ -1417,22 +1417,22 @@ const GlobalLoader = () => (
                 if (pagination) {
                     setTotalPages(pagination.totalPages || 1);
                     // setTotalRecordsCount(pagination.totalRecords || 0); // Sets full count (e.g. 570)
-                    setTotalRecordsCount(pagination.total || 0); 
+                    setTotalRecordsCount(pagination.total || 0);
                 }
-const lines = []; 
-                mergedData.forEach(s => { 
-                    if (['HDD Start Point', 'HDD End Point'].includes(s.locationType)) { 
-                        const lat = parseFloat(s.latitude); 
-                        const lng = parseFloat(s.longitude); 
-                        if (lat && lng) lines.push({ start: { lat, lng }, end: { lat: lat + 0.0001, lng: lng + 0.0001 }, name: s.routeName }); 
-                    } 
-                }); 
+                const lines = [];
+                mergedData.forEach(s => {
+                    if (['HDD Start Point', 'HDD End Point'].includes(s.locationType)) {
+                        const lat = parseFloat(s.latitude);
+                        const lng = parseFloat(s.longitude);
+                        if (lat && lng) lines.push({ start: { lat, lng }, end: { lat: lat + 0.0001, lng: lng + 0.0001 }, name: s.routeName });
+                    }
+                });
                 setUserRoutes(lines);
-            }            
+            }
         } catch (e) { console.error("Fetch Error", e); }
         //  setTotalRecordsCount(0); 
-    }, [applyFilters, currentPage,  role,user?.username, searchDist, searchBlock, searchGeneric, searchDateFrom, searchDateTo]);
-    
+    }, [applyFilters, currentPage, role, user?.username, searchDist, searchBlock, searchGeneric, searchDateFrom, searchDateTo]);
+
     useEffect(() => {
         refreshData();
         if (role === 'admin') {
@@ -1440,29 +1440,29 @@ const lines = [];
             setLogs([{ displayTime: new Date().toLocaleString(), username: 'admin', action: 'LOGIN', details: 'System Access' }]);
         }
     }, [refreshData, role, currentPage, searchDist, searchBlock, searchGeneric, searchDateFrom, searchDateTo]);
-const handleAdminRegister = async (e) => {
-    e.preventDefault();
-    setRegError('');
-    setRegSuccess('');
-    
-    try {
-        const res = await axios.post(`${API_BASE}/users/register`, regData);
-        
-        if (res.status === 201 || res.data.success) {
-            setRegSuccess("User Created Successfully!");
-            // Reset and close after 2 seconds
-            setTimeout(() => {
-                setShowAddUser(false);
-                setRegSuccess('');
-                setRegData({ username: '', mobile: '', password: '', role: 'user' });
-            }, 2000);
+    const handleAdminRegister = async (e) => {
+        e.preventDefault();
+        setRegError('');
+        setRegSuccess('');
+
+        try {
+            const res = await axios.post(`${API_BASE}/users/register`, regData);
+
+            if (res.status === 201 || res.data.success) {
+                setRegSuccess("User Created Successfully!");
+                // Reset and close after 2 seconds
+                setTimeout(() => {
+                    setShowAddUser(false);
+                    setRegSuccess('');
+                    setRegData({ username: '', mobile: '', password: '', role: 'user' });
+                }, 2000);
+            }
+        } catch (err) {
+            // Specifically catches 400 errors like "User already registered"
+            const msg = err.response?.data?.error || err.response?.data?.message || "Registration failed.";
+            setRegError(msg);
         }
-    } catch (err) {
-        // Specifically catches 400 errors like "User already registered"
-        const msg = err.response?.data?.error || err.response?.data?.message || "Registration failed.";
-        setRegError(msg);
-    }
-};
+    };
     // --- HANDLE SUBMIT (With Explicit File Keys) ---
     const handleSurveySubmit = async (formData) => {
         if (!formData || !formData.district) { alert("District is required"); return; }
@@ -1528,30 +1528,30 @@ const handleAdminRegister = async (e) => {
         if (mediaUrl) { setCurrentMedia({ type, url: mediaUrl, filename: `file.${ext}`, meta: survey }); }
         else { alert(`No ${type} found for this survey.`); }
     };
-const formInputStyle = {
-    padding: '10px 12px',
-    borderRadius: '6px',
-    border: '1px solid #ccc',
-    fontSize: '14px',
-    width: '100%',
-    boxSizing: 'border-box',
-    outline: 'none',
-    backgroundColor: '#fafafa'
-};
+    const formInputStyle = {
+        padding: '10px 12px',
+        borderRadius: '6px',
+        border: '1px solid #ccc',
+        fontSize: '14px',
+        width: '100%',
+        boxSizing: 'border-box',
+        outline: 'none',
+        backgroundColor: '#fafafa'
+    };
 
-const submitBtnStyle = {
-    background: '#00e676',
-    color: '#000',
-    padding: '14px',
-    border: 'none',
-    borderRadius: '8px',
-    cursor: 'pointer',
-    fontWeight: 'bold',
-    fontSize: '14px',
-    marginTop: '10px',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-    transition: '0.2s'
-};
+    const submitBtnStyle = {
+        background: '#00e676',
+        color: '#000',
+        padding: '14px',
+        border: 'none',
+        borderRadius: '8px',
+        cursor: 'pointer',
+        fontWeight: 'bold',
+        fontSize: '14px',
+        marginTop: '10px',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+        transition: '0.2s'
+    };
     const handleDirectDownload = async () => { if (!currentMedia || !currentMedia.url) return; try { const response = await fetch(currentMedia.url); const blob = await response.blob(); saveAs(blob, `${currentMedia.meta.generatedFileName}_${currentMedia.type}.${(currentMedia.type.includes('video') || currentMedia.type.includes('gopro')) ? 'mp4' : 'jpg'}`); } catch (e) { console.error("Download failed", e); } };
     const handleDownloadZip = async () => { if (!currentMedia || !currentMedia.url) return; try { const response = await fetch(currentMedia.url); const blob = await response.blob(); const zip = new JSZip(); const ext = (currentMedia.type.includes('video') || currentMedia.type.includes('gopro')) ? 'mp4' : 'jpg'; zip.file(`${currentMedia.meta.generatedFileName}.${ext}`, blob); zip.file("details.txt", `Filename: ${currentMedia.meta.generatedFileName}\nSurveyor: ${currentMedia.meta.surveyorName}`); saveAs(await zip.generateAsync({ type: "blob" }), `${currentMedia.meta.generatedFileName}.zip`); } catch (e) { console.error("Zip failed", e); } };
     const handleGoProUpload = async (e) => { const file = e.target.files[0]; if (!file || !uploadModalId) return; const formData = new FormData(); formData.append('videos', file, 'gopro_video.mp4'); try { await axios.put(`${API_BASE}/surveys/${uploadModalId}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } }); alert("GoPro Uploaded Successfully!"); setUploadModalId(null); refreshData(); } catch (error) { console.error("Upload failed", error); alert("Upload Failed"); } };
@@ -1593,19 +1593,23 @@ const submitBtnStyle = {
         setSelectedBlock(block);
     };
 
-    const handleCloseSurveyForm =() => { 
-        setShowSurveyForm(false); 
-        refreshData(); 
+    const handleCloseSurveyForm = () => {
+        setShowSurveyForm(false);
+        refreshData();
+    }
+
+    const handleServeyTableClose = () => {
+        setShowSurveyTable(false);
         setSearchDist('');
-        setSearchBlock(''); 
-        setSearchGeneric(''); 
-        setSearchDateFrom(''); 
+        setSearchBlock('');
+        setSearchGeneric('');
+        setSearchDateFrom('');
         setSearchDateTo('');
     }
 
     return (
         <div style={styles.container}>
-             {isGlobalLoading && <GlobalLoader />}
+            {isGlobalLoading && <GlobalLoader />}
             <div style={styles.header}>
                 <div style={styles.headerLeft}>
                     <strong style={{ fontSize: '20px' }}>GIS</strong>
@@ -1616,7 +1620,7 @@ const submitBtnStyle = {
                     <select style={styles.select} value={selectedRing} onChange={e => setSelectedRing(e.target.value)}><option value="">Ring</option>{ringOptions.map(r => <option key={r}>{r}</option>)}</select> */}
                 </div>
                 <div style={styles.controls}>
-                     {role === 'admin' && <button onClick={() => setShowAddUser(true)} style={styles.btnWhite}>+ User</button>}
+                    {role === 'admin' && <button onClick={() => setShowAddUser(true)} style={styles.btnWhite}>+ User</button>}
                     <button onClick={() => { setEditingSurvey(null); setIsViewMode(false); setShowSurveyForm(true); }} style={styles.btnGreen}>+ New</button>
                     {/* <button onClick={() => setShowSurveyTable(true)} style={styles.btnWhite}>Data ({submittedSurveys.length})</button> */}
                     <button onClick={() => setShowSurveyTable(true)} style={styles.btnWhite}>Data ({totalRecordsCount})</button>
@@ -1684,33 +1688,33 @@ const submitBtnStyle = {
             )}
 
             {showSurveyTable && (
-                <ModalWrapper title="Survey Database" onClose={() => setShowSurveyTable(false)}>
+                <ModalWrapper title="Survey Database" onClose={handleServeyTableClose}>
                     <div style={styles.filterBox}>
                         <input type="text" style={styles.searchInput} placeholder="Search..." onChange={e => setSearchGeneric(e.target.value)} />
-                        <select 
-    style={styles.select} 
-    value={searchDist} 
-    onChange={e => { 
-        setSearchDist(e.target.value); 
-        setSearchBlock(''); // Reset block selection when district changes
-    }}
->
-    <option value="">All Districts</option>
-    {visibleDistricts.map(d => <option key={d} value={d}>{d}</option>)}
-</select>
+                        <select
+                            style={styles.select}
+                            value={searchDist}
+                            onChange={e => {
+                                setSearchDist(e.target.value);
+                                setSearchBlock(''); // Reset block selection when district changes
+                            }}
+                        >
+                            <option value="">All Districts</option>
+                            {visibleDistricts.map(d => <option key={d} value={d}>{d}</option>)}
+                        </select>
 
-{/* 2. Block Filter: Uses the modal-specific block list */}
-<select 
-    style={styles.select} 
-    value={searchBlock} 
-    onChange={e => setSearchBlock(e.target.value)} 
-    disabled={!searchDist} // Disable if no district is selected
->
-    <option value="">All Blocks</option>
-    {blockOptionsModal.map(b => (
-        <option key={b} value={b}>{b}</option>
-    ))}
-</select>
+                        {/* 2. Block Filter: Uses the modal-specific block list */}
+                        <select
+                            style={styles.select}
+                            value={searchBlock}
+                            onChange={e => setSearchBlock(e.target.value)}
+                            disabled={!searchDist} // Disable if no district is selected
+                        >
+                            <option value="">All Blocks</option>
+                            {blockOptionsModal.map(b => (
+                                <option key={b} value={b}>{b}</option>
+                            ))}
+                        </select>
                         {/* <select style={styles.select} onChange={e => setSearchDist(e.target.value)}><option value="">All Districts</option>{visibleDistricts.map(d => <option key={d}>{d}</option>)}</select>
                         <select style={styles.select} onChange={e => setSearchBlock(e.target.value)}><option value="">All Blocks</option>{blockOptions.map(b => <option key={b}>{b}</option>)}</select> */}
                         <input type="date" style={styles.select} onChange={e => setSearchDateFrom(e.target.value)} /><span>to</span><input type="date" style={styles.select} onChange={e => setSearchDateTo(e.target.value)} />
@@ -1729,7 +1733,7 @@ const submitBtnStyle = {
                             </tr>
                         </thead>
                         <tbody>
-                            
+
                             {submittedSurveys.map(s => {
                                 const justEdited = isJustUpdated(s.lastModifiedTime);
                                 const rowStyle = {
@@ -1768,11 +1772,11 @@ const submitBtnStyle = {
                             })}
                         </tbody>
                     </table>
-                             
+
                     <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', padding: '15px', alignItems: 'center', borderTop: '1px solid #eee' }}>
                         <button style={styles.btnWhite} disabled={currentPage === 1 || totalRecordsCount === 0} onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}>&lt; Prev</button>
                         <span style={{ fontSize: '13px', fontWeight: 'bold' }}>Page {currentPage} of {totalPages}</span>
-                        <button style={styles.btnWhite} disabled={currentPage === totalPages|| totalRecordsCount === 0} onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}>Next &gt;</button>
+                        <button style={styles.btnWhite} disabled={currentPage === totalPages || totalRecordsCount === 0} onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}>Next &gt;</button>
                     </div>
                 </ModalWrapper>
             )}
@@ -1783,80 +1787,80 @@ const submitBtnStyle = {
                 </ModalWrapper>
             )}
 
-         {uploadModalId && <ModalWrapper title="Upload GoPro" onClose={() => setUploadModalId(null)}><div style={{ padding: '20px' }}><input type="file" accept="video/*" onChange={handleGoProUpload} /></div></ModalWrapper>}
-         {/* --new update */}
-{showAddUser && (
-    <ModalWrapper 
-        title="Add New User / Surveyor" 
-        onClose={() => { setShowAddUser(false); setRegError(''); setRegSuccess(''); }}
-    >
-        <div style={{ maxWidth: '450px', margin: '0 auto', padding: '10px' }}>
-            <form onSubmit={handleAdminRegister} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                
-                {/* Message Dialogue */}
-                {regError && (
-                    <div style={{ background: '#ffebee', color: '#c62828', padding: '12px', borderRadius: '8px', fontSize: '13px', textAlign: 'center', border: '1px solid #ef9a9a', fontWeight: '500' }}>
-                        ⚠️ {regError}
+            {uploadModalId && <ModalWrapper title="Upload GoPro" onClose={() => setUploadModalId(null)}><div style={{ padding: '20px' }}><input type="file" accept="video/*" onChange={handleGoProUpload} /></div></ModalWrapper>}
+            {/* --new update */}
+            {showAddUser && (
+                <ModalWrapper
+                    title="Add New User / Surveyor"
+                    onClose={() => { setShowAddUser(false); setRegError(''); setRegSuccess(''); }}
+                >
+                    <div style={{ maxWidth: '450px', margin: '0 auto', padding: '10px' }}>
+                        <form onSubmit={handleAdminRegister} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+
+                            {/* Message Dialogue */}
+                            {regError && (
+                                <div style={{ background: '#ffebee', color: '#c62828', padding: '12px', borderRadius: '8px', fontSize: '13px', textAlign: 'center', border: '1px solid #ef9a9a', fontWeight: '500' }}>
+                                    ⚠️ {regError}
+                                </div>
+                            )}
+                            {regSuccess && (
+                                <div style={{ background: '#e8f5e9', color: '#2e7d32', padding: '12px', borderRadius: '8px', fontSize: '13px', textAlign: 'center', border: '1px solid #a5d6a7', fontWeight: '500' }}>
+                                    ✅ {regSuccess}
+                                </div>
+                            )}
+
+                            {/* Input Fields Container */}
+                            <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', alignItems: 'center', rowGap: '15px', columnGap: '10px' }}>
+
+                                <label style={{ fontWeight: '600', color: '#555', fontSize: '14px' }}>Username</label>
+                                <input
+                                    type="text"
+                                    style={formInputStyle}
+                                    required
+                                    placeholder="Enter username"
+                                    value={regData.username}
+                                    onChange={e => setRegData({ ...regData, username: e.target.value })}
+                                />
+
+                                <label style={{ fontWeight: '600', color: '#555', fontSize: '14px' }}>Mobile No.</label>
+                                <input
+                                    type="tel"
+                                    style={formInputStyle}
+                                    required
+                                    placeholder="10-digit number"
+                                    pattern="[0-9]{10}"
+                                    value={regData.mobile}
+                                    onChange={e => setRegData({ ...regData, mobile: e.target.value })}
+                                />
+
+                                <label style={{ fontWeight: '600', color: '#555', fontSize: '14px' }}>Password</label>
+                                <input
+                                    type="password"
+                                    style={formInputStyle}
+                                    required
+                                    placeholder="••••••••"
+                                    value={regData.password}
+                                    onChange={e => setRegData({ ...regData, password: e.target.value })}
+                                />
+
+                                <label style={{ fontWeight: '600', color: '#555', fontSize: '14px' }}>Assign Role</label>
+                                <select
+                                    style={formInputStyle}
+                                    value={regData.role}
+                                    onChange={e => setRegData({ ...regData, role: e.target.value })}
+                                >
+                                    <option value="user">User (Surveyor)</option>
+                                    <option value="admin">Administrator</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" style={submitBtnStyle}>
+                                CREATE USER ACCOUNT
+                            </button>
+                        </form>
                     </div>
-                )}
-                {regSuccess && (
-                    <div style={{ background: '#e8f5e9', color: '#2e7d32', padding: '12px', borderRadius: '8px', fontSize: '13px', textAlign: 'center', border: '1px solid #a5d6a7', fontWeight: '500' }}>
-                        ✅ {regSuccess}
-                    </div>
-                )}
-
-                {/* Input Fields Container */}
-                <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', alignItems: 'center', rowGap: '15px', columnGap: '10px' }}>
-                    
-                    <label style={{ fontWeight: '600', color: '#555', fontSize: '14px' }}>Username</label>
-                    <input 
-                        type="text" 
-                        style={formInputStyle} 
-                        required 
-                        placeholder="Enter username"
-                        value={regData.username} 
-                        onChange={e => setRegData({...regData, username: e.target.value})} 
-                    />
-
-                    <label style={{ fontWeight: '600', color: '#555', fontSize: '14px' }}>Mobile No.</label>
-                    <input 
-                        type="tel" 
-                        style={formInputStyle} 
-                        required 
-                        placeholder="10-digit number"
-                        pattern="[0-9]{10}" 
-                        value={regData.mobile} 
-                        onChange={e => setRegData({...regData, mobile: e.target.value})} 
-                    />
-
-                    <label style={{ fontWeight: '600', color: '#555', fontSize: '14px' }}>Password</label>
-                    <input 
-                        type="password" 
-                        style={formInputStyle} 
-                        required 
-                        placeholder="••••••••"
-                        value={regData.password} 
-                        onChange={e => setRegData({...regData, password: e.target.value})} 
-                    />
-
-                    <label style={{ fontWeight: '600', color: '#555', fontSize: '14px' }}>Assign Role</label>
-                    <select 
-                        style={formInputStyle} 
-                        value={regData.role} 
-                        onChange={e => setRegData({...regData, role: e.target.value})}
-                    >
-                        <option value="user">User (Surveyor)</option>
-                        <option value="admin">Administrator</option>
-                    </select>
-                </div>
-
-                <button type="submit" style={submitBtnStyle}>
-                    CREATE USER ACCOUNT
-                </button>
-            </form>
-        </div>
-    </ModalWrapper>
-)}
+                </ModalWrapper>
+            )}
             {currentMedia && (
                 <ModalWrapper title="Viewer" onClose={() => setCurrentMedia(null)}>
                     <div style={{ textAlign: 'center', background: 'black', padding: '15px', borderRadius: '8px' }}>
