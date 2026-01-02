@@ -1593,6 +1593,16 @@ const submitBtnStyle = {
         setSelectedBlock(block);
     };
 
+    const handleCloseSurveyForm =() => { 
+        setShowSurveyForm(false); 
+        refreshData(); 
+        setSearchDist('');
+        setSearchBlock(''); 
+        setSearchGeneric(''); 
+        setSearchDateFrom(''); 
+        setSearchDateTo('');
+    }
+
     return (
         <div style={styles.container}>
              {isGlobalLoading && <GlobalLoader />}
@@ -1661,7 +1671,7 @@ const submitBtnStyle = {
 
             {showSurveyForm && (
                 <SurveyForm
-                    onClose={() => { setShowSurveyForm(false); refreshData(); }}
+                    onClose={handleCloseSurveyForm}
                     pickedCoords={pickedCoords}
                     districts={visibleDistricts}
                     blocks={DATA_HIERARCHY.blocks}
