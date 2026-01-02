@@ -1432,7 +1432,9 @@ const lines = [];
         } catch (e) { console.error("Fetch Error", e); }
         //  setTotalRecordsCount(0); 
     }, [applyFilters, currentPage,  role,user?.username, searchDist, searchBlock, searchGeneric, searchDateFrom, searchDateTo]);
-
+    useEffect(() => {
+    setCurrentPage(1);
+}, [searchDist, searchBlock, searchGeneric, searchDateFrom, searchDateTo]);
     useEffect(() => {
         refreshData();
         if (role === 'admin') {
