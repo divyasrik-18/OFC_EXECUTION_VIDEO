@@ -45,13 +45,25 @@ const processFile = async (file, suffix, index = '', baseFilename, metadata) => 
 
 export const createSurvey = async (req, res) => {
     try {
+          const maxIdResult = await db.query(`
+            SELECT id FROM surveys 
+            WHERE id ~ '^[0-9]+$' 
+            ORDER BY id::bigint DESC LIMIT 1
+        `);
+        
+        let id;
+        if (maxIdResult.rows.length > 0) {
+            id = (BigInt(maxIdResult.rows[0].id) + 1n).toString();
+        } else {
+            id = "1";
+        }
         const {
             district, block, routeName, locationType,
             shotNumber, ringNumber, startLocName, endLocName,
             latitude, longitude, surveyorName, surveyorMobile, remarks,
             submittedBy, submitterId
         } = req.body;
-        const id = uuidv4();
+        // const id = uuidv4();
         const now = new Date();
         const istOffset = 5.5 * 60 * 60 * 1000;
         const istDate = new Date(now.getTime() + istOffset);
